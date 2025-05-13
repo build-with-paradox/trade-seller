@@ -7,7 +7,7 @@ Here’s a **clean and professional README** for your **NestSeller – Vendor Da
 **Powerful Dashboard for Multi-Vendor eCommerce Sellers**
 Part of the **TradeNest** ecosystem | Built with **Next.js**, **MongoDB**, and **Cloudinary**
 
-![NestSeller Banner](https://your-image-url.com/seller-banner.png) <!-- Optional -->
+![NestSeller Banner](https://res.cloudinary.com/deduj0jrx/image/upload/v1747159772/nest-seller_dqz10x.png) <!-- Optional -->
 
 ---
 
