@@ -1,26 +1,34 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* Webkit Browsers (Chrome, Safari) */
+::-webkit-scrollbar {
+    width: 1x; /* Thin scrollbar */
   }
-}
-
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
-}
+  
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1; /* Light background */
+    border-radius: 10px;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: #888; /* Darker thumb for visibility */
+    border-radius: 10px;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555; /* Slightly darker on hover */
+  }
+  
+  /* Firefox */
+  * {
+    scrollbar-width: thin; /* Thin scrollbar */
+    scrollbar-color: #888 #f1f1f1; /* Thumb and track */
+  }
+  
+  /* Edge & IE (Limited Support) */
+  body {
+    -ms-overflow-style: none; /* Hide scrollbar for Edge/IE */
+    background-color: #f8f7f7;
+  }
+  
+  
