@@ -59,19 +59,6 @@ Part of the **TradeNest** ecosystem | Built with **Next.js**, **MongoDB**, and *
 
 ---
 
-## 🔗 API Endpoints (Sample)
-
-| Method | Endpoint                   | Description              |
-| ------ | -------------------------- | ------------------------ |
-| POST   | `/api/seller/products`     | Add a new product        |
-| PUT    | `/api/seller/products/:id` | Edit a product           |
-| DELETE | `/api/seller/products/:id` | Delete a product         |
-| GET    | `/api/seller/orders`       | Fetch all orders         |
-| PUT    | `/api/seller/orders/:id`   | Update order status      |
-| GET    | `/api/seller/stats`        | Sales and analytics data |
-
----
-
 ## ⚙️ Setup & Installation
 
 ### 1️⃣ Clone the Repository
