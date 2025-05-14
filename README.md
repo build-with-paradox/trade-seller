@@ -116,10 +116,13 @@ yarn dev
 
 Have questions or need help?
 
-📧 Email: [contact@buildwithparadox.com](mailto:contact@buildwithparadox.com)
-🌐 Portfolio: [buildwithparadox.com](https://buildwithparadox.com)
-💼 LinkedIn: [linkedin.com/in/prashant-bhatt500/](https://www.linkedin.com/in/prashant-bhatt500/)
-💬 Discord: [discord.com/invite/CeGW7mkB](https://discord.com/invite/CeGW7mkB)
+* 📧 Email: [contact@buildwithparadox.com](mailto:contact@buildwithparadox.com)
+
+* 🌐 Portfolio: [buildwithparadox.com](https://buildwithparadox.com)
+
+* 💼 LinkedIn: [linkedin.com/in/prashant-bhatt500/](https://www.linkedin.com/in/prashant-bhatt500/)
+
+* 💬 Discord: [discord.com/invite/CeGW7mkB](https://discord.com/invite/CeGW7mkB)
 
 ---
 
