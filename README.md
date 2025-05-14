@@ -31,19 +31,11 @@ Part of the **TradeNest** ecosystem | Built with **Next.js**, **MongoDB**, and *
 * **Tailwind CSS** – Utility-first styling
 * **ShadCN UI** – Modern UI components
 * **Framer Motion** – Interface animations
-* **Zustand** – Global state management
-* **React Hook Form** – Form handling
-* **React Query** – API interactions & caching
-* **Clerk/Auth.js** – Authentication & Authorization
-* **React ChartJS** – Sales and analytics charts
-
-### Backend
-
-* **Node.js & Express**
+* **NextAuth** – Authentication & Authorization
+* **ChartJS** – Sales and analytics charts
 * **MongoDB + Mongoose**
 * **Cloudinary** – Image uploads
 * **JWT** – Secure API access
-* **Nodemailer** – Email notifications
 
 ---
 
@@ -58,7 +50,27 @@ Part of the **TradeNest** ecosystem | Built with **Next.js**, **MongoDB**, and *
 * 📩 **Automated Emails** – Notifications for orders & shipping
 
 ---
-
+### Setup env.local
+    GOOGLE_ID=YOUR GOOGLE APP ID
+    GOOGLE_SECRET= YOUR GOOGLE SECRET
+    
+    GITHUB_ID=YOUR GITHUB OAUTH APP ID
+    GITHUB_SECRET= YOUR GITHUB OAUTH APP SECRET
+    
+    NEXTAUTH_SECRET=your_random_secret_key
+    NEXTAUTH_URL=http://localhost:3000
+    
+    NEXT_PUBLIC_URL=http://localhost:3000
+    
+    CLOUDINARY_CLOUD_NAME=YOUR CLOUD NAME
+    CLOUDINARY_API_KEY=YOUR CLOUDINARY API KEY
+    CLOUDINARY_API_SECRET=YOUR CLOUDINARY API SECRET
+    
+    MONGODB_URI=YOUR MONGODB URI
+    
+    NODE_ENV=production
+    ---
+    
 ## ⚙️ Setup & Installation
 
 ### 1️⃣ Clone the Repository
@@ -106,15 +118,6 @@ yarn dev
 | **MongoDB Atlas**     | Database Hosting |
 | **Cloudinary**        | Image Hosting    |
 | **Razorpay** | Payments         |
-
----
-
-## 📌 Upcoming Features
-
-* 📱 Mobile-optimized dashboard
-* 📊 Advanced product-level analytics
-* 🔁 Inventory syncing with external marketplaces
-* 🔔 Push notifications for orders and low stock
 
 ---
 
