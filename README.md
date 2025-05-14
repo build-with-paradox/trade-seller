@@ -50,7 +50,10 @@ Part of the **TradeNest** ecosystem | Built with **Next.js**, **MongoDB**, and *
 * 📩 **Automated Emails** – Notifications for orders & shipping
 
 ---
-### Setup env.local
+### 3️⃣ Configure Environment Variables
+
+Create a `.env.local` file and add:
+
     GOOGLE_ID=YOUR GOOGLE APP ID
     GOOGLE_SECRET= YOUR GOOGLE SECRET
     
@@ -86,18 +89,6 @@ cd nestseller
 npm install
 # or
 yarn install
-```
-
-### 3️⃣ Configure Environment Variables
-
-Create a `.env.local` file and add:
-
-```env
-NEXT_PUBLIC_API_URL=
-MONGODB_URI=mongodb+srv://yourusername:password@cluster.mongodb.net/tradenest
-CLOUDINARY_URL=cloudinary://your-api-key:your-secret@your-cloud
-JWT_SECRET=your-secret-key
-STRIPE_SECRET_KEY=your-stripe-key
 ```
 
 ### 4️⃣ Start Development Server
