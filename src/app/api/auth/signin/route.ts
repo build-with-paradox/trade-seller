@@ -8,7 +8,7 @@ const rateLimitMap = new Map<string, { count: number; timestamp: number }>();
 const RATE_LIMIT_MAX_REQUESTS = 5; 
 const RATE_LIMIT_TIME_FRAME = 60 * 1000;
 
-export const handler = async (request: NextRequest) => {
+export const POST = async (request: NextRequest) => {
   try {
     if (request.method !== "POST") {
       return NextResponse.json({ error: "Method Not Allowed" }, { status: 405 });
