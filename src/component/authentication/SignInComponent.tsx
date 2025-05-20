@@ -14,36 +14,6 @@ const SignIn = () => {
     setUser({ ...user, [e.target.name]: e.target.value });
   };
 
-  const handleSignIn = async (e:any) => {
-    // e.preventDefault();
-    // try {
-    //   const response = await signinClientService(user);
-    //   if (response.success) {
-    //     toast.success(response.message, {
-    //       style: {
-    //         borderRadius: "50px",
-    //         background: "#fff",
-    //         color: "#333",
-    //       },
-    //     });
-        
-    //     console.log(response)
-    //     router.push("/"); 
-    //   } else {
-    //     toast.error(response.message, { 
-    //             style:{ 
-    //               borderRadius: "50px", 
-    //               background: "#fff", 
-    //               color: "#333"
-    //             }
-    //           });
-    //     console.log("Login failed:", response.message);
-    //   }
-    // } catch (error) {
-    //   console.error("Error during sign-in:", error);
-    // }
-  };
-
 
   return (
     <div className="h-full bg-gray-50 flex items-center justify-center">
@@ -59,7 +29,7 @@ const SignIn = () => {
                 Welcome back! Please enter your credentials to Sign in.
               </p>
 
-              <form onSubmit={handleSignIn} className="space-y-4">
+              <form className="space-y-4">
                 {/* Email */}
                 <div>
                   <label htmlFor="email" className="block text-sm text-gray-600 mb-1">

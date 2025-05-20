@@ -1,17 +1,21 @@
+// /app/api/auth/[...nextauth]/route.ts (or /pages/api/auth/[...nextauth].ts if using Pages router)
 import NextAuth, { NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import GitHubProvider from "next-auth/providers/github";
-import CredentialsProvider from "next-auth/providers/credentials"; 
-import bcrypt from "bcryptjs"; 
-import { mongooseConnection } from "@/lib/mongoconnection";
+import CredentialsProvider from "next-auth/providers/credentials";
+import bcrypt from "bcryptjs";
 import Users from "@/models/Users";
+import { mongooseConnection } from "@/lib/mongoconnection";
+import { applyRateLimit } from "@/lib/ratelimiter";
+import { RateLimitRequestInterface } from "@/types/ratelimitTypes";
 
+// Extend Session and JWT types
 declare module "next-auth" {
   interface Session {
     user?: {
+      id?: string;
       username?: string | null;
       email?: string | null;
-      id?: string;
       accessToken?: string;
       provider?: string;
       role?: string;
@@ -19,13 +23,14 @@ declare module "next-auth" {
     };
   }
 }
-
 declare module "next-auth/jwt" {
   interface JWT {
     id?: string;
     accessToken?: string;
     provider?: string;
     role?: string;
+    email?: string;
+    name?: string;
     error?: string;
   }
 }
@@ -41,31 +46,25 @@ const authOptions: NextAuthOptions = {
       clientSecret: process.env.GITHUB_SECRET || "",
     }),
     CredentialsProvider({
-      name: "Credentials", 
+      name: "Credentials",
       credentials: {
         email: { label: "Email", type: "email" },
         password: { label: "Password", type: "password" },
       },
-      async authorize(credentials) {
-        const { email, password } = credentials || {};
+      async authorize(credentials, req) {
+        const ip = (req as RateLimitRequestInterface)?.headers["x-forwarded-for"] || "";
+        await applyRateLimit(ip);
 
-        if (!email || !password) {
-          throw new Error("Email and password are required.");
-        }
+        const { email, password } = credentials || {};
+        if (!email || !password) throw new Error("Email and password are required.");
 
         await mongooseConnection();
 
-        const user = await Users.findOne({ email });
-
-        if (!user) {
-          throw new Error("User not found.");
-        }
+        const user = await Users.findOne({ email: email.toLowerCase() }).select("+password");
+        if (!user) throw new Error("User not found.");
 
         const isPasswordValid = await bcrypt.compare(password, user.password);
-
-        if (!isPasswordValid) {
-          throw new Error("Invalid password.");
-        }
+        if (!isPasswordValid) throw new Error("Invalid password.");
 
         return {
           id: user._id.toString(),
@@ -76,28 +75,51 @@ const authOptions: NextAuthOptions = {
       },
     }),
   ],
+
   callbacks: {
     async jwt({ token, account, profile }) {
+      await mongooseConnection();
+
       if (account) {
         token.accessToken = account.access_token;
         token.provider = account.provider;
 
-        await mongooseConnection();
+        let email = profile?.email?.toLowerCase()?.trim();
+        if (!email && token.email) email = token.email;
 
-        // First, try to find an existing user by email
-        let user = await Users.findOne({ email: profile?.email });
+        let user;
 
-        if (!user) {
-          user = await Users.create({
-            username: profile?.name || "New User",
-            email: profile?.email,
-            role: "seller", 
-            provider: account.provider,
-          });
+        if (account) {
+          token.accessToken = account.access_token;
+          token.provider = account.provider;
+        
+          let email = profile?.email?.toLowerCase()?.trim();
+          if (!email && token.email) email = token.email;
+        
+          let user;
+        
+          if (email) {
+            user = await Users.findOne({ email });
+        
+            if (!user) {
+              user = await Users.create({
+                username: profile?.name || "New User",
+                email,
+                role: "seller",
+                provider: account.provider,
+              });
+            } else if (user.provider !== account.provider) {
+              user.provider = account.provider;
+              await user.save();
+            }
+            // ✅ Always assign token values
+            token.id = user._id.toString();
+            token.role = user.role;
+            token.email = user.email;
+            token.name = user.username;
+          }
         }
-
-        token.id = user._id.toString();
-        token.role = user.role;
+        
       }
 
       return token;
@@ -105,7 +127,7 @@ const authOptions: NextAuthOptions = {
 
     async session({ session, token }) {
       if (!token.id) {
-        delete session.user; // If no token ID, remove the session user
+        delete session.user;
       } else {
         session.user = {
           id: token.id,
@@ -113,24 +135,25 @@ const authOptions: NextAuthOptions = {
           provider: token.provider,
           role: token.role,
           error: token.error,
+          email: token.email || null,
+          username: token.name || null,
         };
       }
-
       return session;
     },
   },
 
   pages: {
-    signIn: "/authentication/signin", 
-    error: "/authentication/signin", 
+    signIn: "/authentication/signin",
+    error: "/authentication/signin",
+  },
+
+  session: {
+    strategy: "jwt",
   },
 
   secret: process.env.NEXTAUTH_SECRET,
-  session: {
-    strategy: "jwt", 
-  },
 };
 
 const handler = NextAuth(authOptions);
-
 export { handler as GET, handler as POST };
